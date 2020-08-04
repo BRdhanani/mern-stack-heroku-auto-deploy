@@ -39,4 +39,10 @@ router.post('/add', (req, res) => {
 	});
 });
 
+router.delete('/delete/:id', (req, res) => {
+	BlogPost.findById(req.params.id)
+	.then(BlogPost => BlogPost.remove().then(() => res.json({msg: "Your data has been deleted"})))
+	.catch(error => res.status(404).json({msg: "Error deleting data"}));
+});
+
 module.exports = router;
