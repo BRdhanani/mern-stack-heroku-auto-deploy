@@ -37,3 +37,8 @@ button {
   border-radius: 4px;
   padding: 10px;
 }
+
+.delete-button {
+  float: right;
+  margin: 40px;
+}

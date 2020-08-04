@@ -58,13 +58,30 @@ class App extends React.Component {
     })
   }
 
+  handleDelete = (data) => {
+    axios({
+      url: `/blog/delete/${data._id}`,
+      method: 'DELETE'
+    })
+    .then(() => {
+      console.log('Data deleted');
+      this.getPosts();
+    })
+    .catch((error) => {
+      console.log('error');
+    })
+  }
+
   displayPost = (posts) => {
     if(!posts.length) return null;
 
     return posts.map((data, index) => (
-      <div key={index} className="blogpost">
-        <h3>{data.title}</h3>
-        <p>{data.body}</p>
+      <div key={index}>
+        <button className="delete-button" onClick={() => this.handleDelete(data)}>Delete</button>
+        <div className="blogpost">
+          <h3>{data.title}</h3>
+          <p>{data.body}</p>
+        </div>
       </div>
     ));
   }
@@ -74,10 +91,10 @@ class App extends React.Component {
       <div className="app">
         <form onSubmit={this.handleSubmit}>
           <div className="form-input">
-            <input type="text" placeholder="Enter Title" name="title" value={title} onChange={this.handleChange}/>
+            <input type="text" placeholder="Enter Title" name="title" value={title} onChange={this.handleChange} required/>
           </div>
           <div className="form-input">
-            <textarea name="body" placeholder="Enter Description" value={body} onChange={this.handleChange}></textarea>
+            <textarea name="body" placeholder="Enter Description" value={body} onChange={this.handleChange} required></textarea>
           </div>
           <button>Submit</button>
         </form>
